@@ -15,9 +15,9 @@ jobs:
       fail-fast: false
       matrix:
         node-version:
+          - 20
           - 18
           - 16
-          - 14
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -26,14 +26,9 @@ jobs:
       - run: npm ci
       - run: npm run ci:test
 
-      - name: Run linter
-        if: (success() || failure())
-        uses: wearerequired/lint-action@v2
-        with:
-          xo: true
-
-      - name: Comment PR with coverage info
-        if: github.event_name == 'pull_request' && (success() || failure())
+      - name: Comment PR with coverage info (only for node v20)
+        if: github.event_name == 'pull_request' && matrix.node-version == 20 (success() || failure())
         uses: danhunsaker/clover-reporter-action@v0.2.17-clover
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           clover-file: ./coverage/clover.xml

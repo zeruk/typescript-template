@@ -7,6 +7,18 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    name: Lint code
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - name: Run linter
+        uses: wearerequired/lint-action@v2
+        with:
+          xo: true
+
   commitlint:
     runs-on: ubuntu-22.04
     steps:
