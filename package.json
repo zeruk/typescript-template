@@ -4,7 +4,8 @@
   "description": "Ideal github nodejs typescript template",
   "main": "index.js",
   "scripts": {
-    "test": "prettier --check \"*/**/*.{ts,js,json}\" && xo && jest",
+    "test": "xo && jest",
+    "ci:test": "prettier --check \"*/**/*.{ts,js,json}\" && xo && jest --coverage",
     "build": "tsc",
     "prepare": "husky install"
   },

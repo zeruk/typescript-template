@@ -1,11 +1,16 @@
 name: Lint and test files
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 
 jobs:
   test:
     name: Node.js ${{ matrix.node-version }}
     runs-on: ubuntu-latest
+    permissions: write-all
     strategy:
       fail-fast: false
       matrix:
@@ -18,9 +23,17 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install --force
-      - run: npm test
-      # - uses: codecov/codecov-action@v1
-      #   if: matrix.node-version == 14
-      #   with:
-      #     fail_ci_if_error: true
+      - run: npm ci
+      - run: npm run ci:test
+
+      - name: Run linter
+        if: (success() || failure())
+        uses: wearerequired/lint-action@v2
+        with:
+          xo: true
+
+      - name: Comment PR with coverage info
+        if: github.event_name == 'pull_request' && (success() || failure())
+        uses: danhunsaker/clover-reporter-action@v0.2.17-clover
+        with:
+          clover-file: ./coverage/clover.xml
