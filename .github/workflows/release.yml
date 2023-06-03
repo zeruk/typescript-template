@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+name: Release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: npm ci
+      - run: npm run ci:test
+
+      - run: echo "package_name=`jq -r '.name' package.json`" > $GITHUB_OUTPUT
+        id: getpackagename
+
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          package-name: ${{ steps.getpackagename.outputs.package_name }}
+          bump-minor-pre-major: true
+
+      # - run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   if: ${{ steps.release.outputs.release_created }}
+      #   shell: bash
