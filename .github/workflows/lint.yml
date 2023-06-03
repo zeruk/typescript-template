@@ -10,7 +10,11 @@ jobs:
   lint:
     name: Lint code
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: read
+      issues: write
+      checks: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
       - run: npm ci
