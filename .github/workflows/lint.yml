@@ -34,10 +34,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install commitlint
+      - name: Remove original packages and install commitlint
         run: |
-          npm install conventional-changelog-conventionalcommits
-          npm install commitlint@latest
+          updatedPkg=`cat package.json | \
+            jq 'del(.dependencies) | .devDependencies |= {"@commitlint/cli":."@commitlint/cli", "@commitlint/config-conventional":."@commitlint/config-conventional"}'`
+          echo $updatedPkg > package.json
+          npm install @commitlint/cli@latest @commitlint/config-conventional@latest
 
       - name: Validate current commit (last commit) with commitlint
         if: github.event_name == 'push'
