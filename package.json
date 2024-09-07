@@ -7,7 +7,7 @@
     "test": "xo && jest",
     "ci:test": "prettier --check \"*/**/*.{ts,js,json}\" && xo && jest --coverage",
     "build": "tsc",
-    "prepare": "husky install"
+    "prepare": "husky install || true"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/zeruk/typescript-template#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.6.5",
-    "@commitlint/config-conventional": "^17.6.5",
+    "@commitlint/cli": "^19.4.1",
+    "@commitlint/config-conventional": "^19.4.1",
     "@jest/globals": "^29.5.0",
     "@tsconfig/recommended": "^1.0.2",
     "eslint-config-prettier": "^8.8.0",
@@ -53,6 +53,12 @@
     "semicolon": false,
     "rules": {
       "import/extensions": 0
+    }
+  },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"],
+    "rules": {
+      "body-max-line-length": [1, "always", 130]
     }
   }
 }
