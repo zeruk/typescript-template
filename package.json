@@ -7,7 +7,7 @@
     "test": "xo && jest",
     "ci:test": "prettier --check \"*/**/*.{ts,js,json}\" && xo && jest --coverage",
     "build": "tsc",
-    "prepare": "husky install || true"
+    "prepare": "husky ./.husky || true"
   },
   "repository": {
     "type": "git",
