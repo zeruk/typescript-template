@@ -22,16 +22,16 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.1",
     "@commitlint/config-conventional": "^19.4.1",
-    "@jest/globals": "^29.5.0",
-    "@tsconfig/recommended": "^1.0.2",
+    "@jest/globals": "^29.7.0",
+    "@tsconfig/recommended": "^1.0.7",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-sonarjs": "^0.19.0",
+    "eslint-plugin-sonarjs": "^2.0.2",
     "husky": "^9.1.5",
-    "jest": "^29.5.0",
+    "jest": "^29.7.0",
     "prettier": "^3.3.3",
     "ts-jest": "^29.2.5",
     "typescript": "^5.5.4",
-    "xo": "^0.54.2"
+    "xo": "^0.59.3"
   },
   "xo": {
     "envs": [
@@ -56,9 +56,15 @@
     }
   },
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"],
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
     "rules": {
-      "body-max-line-length": [1, "always", 130]
+      "body-max-line-length": [
+        1,
+        "always",
+        130
+      ]
     }
   }
 }
